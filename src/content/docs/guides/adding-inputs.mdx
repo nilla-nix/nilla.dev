@@ -1,0 +1,49 @@
+---
+title: Adding Inputs
+description: Learn how to use different dependencies in a Nilla project.
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+
+import add0Code from "./adding-inputs/add0.nix?raw";
+import add1Code from "./adding-inputs/add1.nix?raw";
+import add2Code from "./adding-inputs/add2.nix?raw";
+
+Nilla uses a system of `loaders` to import inputs you define. Out of the box, Nilla is able
+to load other Nilla projects, Nixpkgs, Nix Flakes, legacy `default.nix` files, and raw directories.
+By default, Nilla will try and select the loader for an input automatically by detecting its
+contents. However, you can customize this by manually setting the loader option for a specific
+input.
+
+<Aside type="caution">
+	Nilla only handles loading (importing) inputs, _not_ fetching them. For
+	fetching dependencies it is recommended to use a tool like
+	[npins](https://github.com/andir/npins).
+</Aside>
+
+## Adding an input
+
+Before modifying your Nilla project, pin your dependency using a tool like [npins](https://github.com/andir/npins).
+
+```bash
+# For example, if the dependency we want to pin is on GitHub
+npins add github my-user my-repo --branch main --name my-input
+```
+
+To add a new input to your Nilla project, set the option `inputs.<my-input>`.
+
+<Code lang="nix" code={add0Code} title="nilla.nix" />
+
+## Adding pins automatically
+
+Nilla makes it easy to quickly and easily add all of your pinned dependencies to your project.
+To do so, set your project's `inputs` to the following.
+
+<Code lang="nix" code={add1Code} title="nilla.nix" />
+
+## Referring to inputs
+
+Once an input has been added, you can access the loaded form of the input via the input's `result`
+attribute.
+
+<Code lang="nix" code={add2Code} title="nilla.nix" />

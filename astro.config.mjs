@@ -1,28 +1,38 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
+
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: "Nilla",
 			social: {
-				github: 'https://github.com/withastro/starlight',
+				github: "https://github.com/nilla-nix/nilla",
 			},
 			sidebar: [
 				{
-					label: 'Guides',
+					label: "Guides",
 					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
+						{ label: "Quickstart", slug: "guides/quickstart" },
+						{ label: "Using Modules", slug: "guides/using-modules" },
+						{ label: "Adding Inputs", slug: "guides/adding-inputs" },
+						{ label: "Creating Packages", slug: "guides/creating-packages" },
+						{ label: "Creating Shells", slug: "guides/creating-shells" },
 					],
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: "Reference",
+					autogenerate: { directory: "reference" },
 				},
 			],
+			customCss: ["./src/styles/global.css"],
 		}),
 	],
+
+	vite: {
+		plugins: [tailwindcss()],
+	},
 });

@@ -1,0 +1,51 @@
+---
+title: Creating Shells
+description: Learn how to create Nix shells with Nilla.
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+
+import shell0Code from "./creating-shells/shell0.nix?raw";
+import shell1Code from "./creating-shells/shell1.nix?raw";
+import shell2Code from "./creating-shells/shell2.nix?raw";
+
+Similar to `inputs`, Nilla uses a system of `builders` to create shells. A builder provides
+a `build` function and `settings` options to configure its use. Out of the box, Nilla ships with
+a single builder, `nixpkgs`. This builder is used to create shells using Nixpkgs' `callPackage`
+functionality. This guide will show you how to create a new shell using the `nixpkgs` builder,
+but remember that you can create your own builders as well!
+
+<Aside type="note">
+  This guide will assume you have a Nilla project created and a Nixpkgs pin available.
+</Aside>
+
+## Create a new shell
+
+To create a new shell, we need to define two options: the `systems` that the shell will be
+built for and the `shell` function that will produce the built shell.
+
+<Code lang="nix" code={shell0Code} title="my-shell.nix" />
+
+This shell can now be built using the Nilla CLI.
+
+```bash
+nilla shell my-shell
+```
+
+<Aside type="tip">
+  If you name your shell `default` then you can run `nilla shell` on its own to use it!
+</Aside>
+
+## Using a custom package set
+
+By default, the Nixpkgs builder will use the package set produced by `inputs.nixpkgs` if it
+exists. However, we can also specify the package set manually in our shell definition.
+
+<Code lang="nix" code={shell1Code} title="my-shell.nix" />
+
+## Customizing shell arguments
+
+The `shell` function takes its arguments from Nixpkgs' `callPackage` function in addition to
+`settings`. This allows us to override or provide additional configuration.
+
+<Code lang="nix" code={shell2Code} title="my-shell.nix" />

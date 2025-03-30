@@ -1,0 +1,67 @@
+---
+title: Using Modules
+description: Learn how to use Nilla modules to organize your project.
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+
+import modules0Code from "./using-modules/modules0.nix?raw";
+import modules1Code from "./using-modules/modules1.nix?raw";
+import modules2Code from "./using-modules/modules2.nix?raw";
+import modules3Code from "./using-modules/modules3.nix?raw";
+
+Nilla projects are built on [Aux Lib](https://git.auxolotl.org/auxolotl/lib)'s module system. This
+means that we define our project in individual chunks called modules.
+
+## What is a Module?
+
+A module two important parts:
+
+- `options`: A place to declare available options that can be used in the project.
+- `config`: A place to define the project's configuration.
+
+More directly, a module typically specifies a `config` value with settings to apply to your project.
+Sometimes, a module will also create new `options` that can be used in the project, but this is not
+always necessary.
+
+## Defining a Module
+
+A module can be specified in **3** different ways. Let's go through them.
+
+### Attribute Set Module
+
+An attribute set is a valid Aux Lib module. This is the simplest way to define a module, but due to
+that simplicity it lacks the ability to refer to other parts of the project configuration.
+
+<Code lang="nix" code={modules0Code} title="my-module.nix" />
+
+### Function Module
+
+More useful than an attribute set, a function module can refer to other parts of the project via its
+arguments. The return value of the function is an attribute set just like the one we saw above.
+
+<Code lang="nix" code={modules1Code} title="my-module.nix" />
+
+### Path Module
+
+Since it is so common to separate modules into their own files, modules can be specified as a path to
+the file containing the module definition. Aux Lib will then import and use your module.
+
+```nix
+./my-module.nix
+```
+
+## Using Modules
+
+To start using modules in your project, you can use the `includes` module attribute to specify
+additional modules that Aux Lib should include in your project.
+
+<Code lang="nix" code={modules2Code} title="nilla.nix" />
+
+## Creating Options
+
+You can create your own options in a module by defining `options`. A consumer of your module can
+then set these options and benefit from their application. Let's take a look at how to create a
+simple option that allows us to set a `message` in our project configuration.
+
+<Code lang="nix" code={modules3Code} title="nilla.nix" />

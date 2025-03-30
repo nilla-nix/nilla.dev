@@ -1,0 +1,82 @@
+---
+title: Quickstart
+description: Get started using Nilla in minutes!
+---
+
+import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
+import nixLegacyCode from "./quickstart/nix-legacy.sh?raw";
+import nixFlakesCode from "./quickstart/nix-flakes.sh?raw";
+import nixosFlakesCode from "./quickstart/nixos-flakes.nix?raw";
+import nixosLegacyCode from "./quickstart/nixos-legacy.nix?raw";
+import nilla0Code from "./quickstart/nilla0.nix?raw";
+import nilla1Code from "./quickstart/nilla1.nix?raw";
+
+Nilla provides a single entrypoint with a consistent structure for your Nix projects. In this guide
+we will learn how to install and run the Nilla CLI, add an input, and create a development shell.
+
+## Nilla CLI
+
+To start working with Nilla projects we will need the Nilla CLI. This program makes it easier to do
+things like build packages, start development shells, etc. Install the Nilla CLI to get started.
+
+<Tabs>
+	<TabItem label="Nix (Flakes)">
+		<Code lang="bash" code={nixFlakesCode} />
+	</TabItem>
+	<TabItem label="Nix (Legacy)">
+		<Code lang="bash" code={nixLegacyCode} />
+	</TabItem>
+	<TabItem label="NixOS (Flakes)">
+		<Code lang="nix" code={nixosFlakesCode} title="flake.nix" />
+	</TabItem>
+	<TabItem label="NixOS (Legacy)">
+		<Code lang="nix" code={nixosLegacyCode} title="configuration.nix" />
+	</TabItem>
+</Tabs>
+
+## Create a new Nilla project
+
+To start using Nilla, we need to create a `nilla.nix` file which contains a Nilla project. Let's
+begin by using [npins](https://github.com/andir/npins) to fetch Nilla.
+
+```bash
+# Initialize npins
+npins init --bare
+
+# Pin Nilla
+npins add github nilla-nix nilla
+```
+
+Now, we can make our `nilla.nix` file.
+
+<Code lang="nix" code={nilla0Code} title="nilla.nix" />
+
+That is all we need to have a valid Nilla project!
+
+## Create a development shell
+
+An empty project isn't very useful. Let's add Nixpkgs as an input and use it to create a
+development shell. To begin, we'll use `npins` to fetch Nixpkgs.
+
+```bash
+# Pin Nixpkgs (you can use any channel you like)
+npins add channel nixos-unstable
+```
+
+With Nixpkgs available in our pins, we can add it as an input and declare our shell.
+
+<Code lang="nix" code={nilla1Code} title="nilla.nix" />
+
+## Running the shell
+
+Now that our development shell is defined in our project, we can use the Nilla CLI to start it.
+
+```bash
+nilla shell
+```
+
+To check that everything is working correctly, try running `hello`.
+
+```bash
+hello
+```

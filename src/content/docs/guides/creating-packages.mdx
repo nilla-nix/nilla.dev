@@ -1,0 +1,51 @@
+---
+title: Creating Packages
+description: Learn how to create Nix packages with Nilla.
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+
+import package0Code from "./creating-packages/package0.nix?raw";
+import package1Code from "./creating-packages/package1.nix?raw";
+import package2Code from "./creating-packages/package2.nix?raw";
+
+Similar to `inputs`, Nilla uses a system of `builders` to create packages. A builder provides
+a `build` function and `settings` options to configure its use. Out of the box, Nilla ships with
+a single builder, `nixpkgs`. This builder is used to create packages using Nixpkgs' `callPackage`
+functionality. This guide will show you how to create a new package using the `nixpkgs` builder,
+but remember that you can create your own builders as well!
+
+<Aside type="note">
+  This guide will assume you have a Nilla project created and a Nixpkgs pin available.
+</Aside>
+
+## Create a new package
+
+To create a new package, we need to define two options: the `systems` that the package will be
+built for and the `package` function that will produce the built package.
+
+<Code lang="nix" code={package0Code} title="my-package.nix" />
+
+This package can now be built using the Nilla CLI.
+
+```bash
+nilla build my-package
+```
+
+<Aside type="tip">
+  If you name your package `default` then you can run `nilla build` on its own to build it!
+</Aside>
+
+## Using a custom package set
+
+By default, the Nixpkgs builder will use the package set produced by `inputs.nixpkgs` if it
+exists. However, we can also specify the package set manually in our package definition.
+
+<Code lang="nix" code={package1Code} title="my-package.nix" />
+
+## Customizing package arguments
+
+The `package` function takes its arguments from Nixpkgs' `callPackage` function in addition to
+`settings`. This allows us to override or provide additional configuration.
+
+<Code lang="nix" code={package2Code} title="my-package.nix" />

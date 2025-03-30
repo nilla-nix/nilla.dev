@@ -1,0 +1,10 @@
+root = true
+
+[*]
+indent_style = tab
+indent_size = 2
+insert_final_newline = true
+line_ending = lf
+
+[*.{yaml,yml,nix,md,mdx}]
+indent_style = space

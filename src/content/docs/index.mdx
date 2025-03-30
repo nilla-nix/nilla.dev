@@ -1,36 +1,73 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Nilla
+description: Create Nilla projects that manage your packages, development shells, systems, and more with Nix!
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Nilla is a simple-to-use, easy-to-extend Nix framework for managing projects.
   image:
-    file: ../../assets/houston.webp
+    file: ../../assets/nilla.svg
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Quickstart Guide
+      link: /guides/quickstart/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
+    - text: Read the docs
+      link: /reference/nilla
+      icon: right-arrow
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+## Why Nilla?
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+Nilla combines many of the lessons learned from working with Flakes, NixOS Modules, and Legacy `default.nix` files. Bringing the best qualities of these different strategies together in a modular fashion allows for much easier management of projects than before. Nilla gives you the schema guarantees of Flakes, but with the ability to extend or change that schema as you need. You get the type-checking and pluggability of NixOS Modules without a forced Nixpkgs import while also benefiting from some features like Portable Submodules. Finally, you have the ability to manage more than one system, package, shell, etc. easily, unlike with legacy `default.nix` and `shell.nix` approaches.
+
+## Features
+
+Nilla is ready to use out of the box with no additional configuration or Nix settings required.
+
+<div className="flex flex-col lg:flex-row gap-8">
+  <div className="shrink-0">
+    | Feature              | Nilla    | Flakes | Legacy |
+    | -------------------- | -------- | ------ | ------ |
+    | Pinnable inputs      | ✔️       | ✔️     | ❌     |
+    | Input loaders        | ✔️       | ❌     | ❌     |
+    | Minimal boilerplate  | ✔️       | ❌     | ✔️     |
+    | Configurable inputs  | ✔️       | ❌     | ⚠️\*   |
+    | Extensible           | ✔️       | ❌     | ❌     |
+    | Lazy                 | ✔️       | ⚠️\*\* | ✔️     |
+    | Available OOTB       | ✔️       | ❌     | ✔️     |
+    | Nixpkgs-agnostic     | ✔️       | ❌     | ✔️     |
+    | Type checked         | ✔️       | ❌     | ❌     |
+    | Configurable systems | ✔️       | ❌     | ❌     |
+    | Defined schema       | ✔️       | ✔️     | ❌     |
+    | Stable               | ⚠️\*\*\* | ❌     | ✔️     |
+  </div>
+  <div className="lg:self-end">
+    ⚠️\* Legacy configuration using `default.nix` and `shell.nix` can only accept dynamic values via function attributes during instantiation, dramatically limiting what can be modified by consumers of a project.
+
+    ⚠️\*\* Flakes have a work-in-progress feature "Lazy Trees" which hopes to address its input laziness shortcoming. However, this feature is not yet available.
+
+    ⚠️\*\*\* Nilla isn't stable... yet! We are moving towards a 1.0.0 stability guarantee, but for now it is expected that some things will be broken or change as development continues on pre-1.0 versions.
+  </div>
+</div>
+
+## Projects using Nilla
+
+<CardGrid>
+  <LinkCard
+    title="jakehamilton/config"
+    href="https://github.com/jakehamilton/config"
+    description="Nix configuration for packages, systems, and more."
+  />
+  <LinkCard
+    title="nilla-nix/cli"
+    href="https://github.com/nilla-nix/cli"
+    description="The command line interface for working with Nilla projects."
+  />
+  <LinkCard
+    title="nilla-nix/nilla.dev"
+    href="https://github.com/nilla-nix/nilla.dev"
+    description="The documentation website for Nilla."
+  />
 </CardGrid>
