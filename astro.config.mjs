@@ -21,6 +21,7 @@ export default defineConfig({
 						{ label: "Adding Inputs", slug: "guides/adding-inputs" },
 						{ label: "Creating Packages", slug: "guides/creating-packages" },
 						{ label: "Creating Shells", slug: "guides/creating-shells" },
+						{ label: "NixOS Support", slug: "guides/nixos-support" },
 					],
 				},
 				{

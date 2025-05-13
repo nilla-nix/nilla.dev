@@ -1,0 +1,76 @@
+---
+title: NixOS Support
+description: Learn how to create and configure NixOS systems in your Nilla project.
+---
+
+import { Aside, TabItem, Tabs, Code } from "@astrojs/starlight/components";
+
+import nixLegacyCode from "./nixos-support/nix-legacy.sh?raw";
+import nixFlakesCode from "./nixos-support/nix-flakes.sh?raw";
+import nixosFlakesCode from "./nixos-support/nixos-flakes.nix?raw";
+import nixosLegacyCode from "./nixos-support/nixos-legacy.nix?raw";
+import nilla0Code from "./nixos-support/nilla0.nix?raw";
+import nilla1Code from "./nixos-support/nilla1.nix?raw";
+
+Nilla provides support for NixOS using the [nixos](https://github.com/nilla-nix/nixos) module and its
+accompanying CLI plugin. To get started, we will add the module to our project and install the CLI
+plugin so that we can work with the NixOS systems we create.
+
+<Aside type="note">
+  This guide will assume you have a Nilla project created and a Nixpkgs pin available.
+</Aside>
+
+## CLI Plugin
+
+To interact with NixOS systems in Nilla projects, we will use the Nilla NixOS CLI plugin.
+
+<Tabs>
+	<TabItem label="Nix (Flakes)">
+		<Code lang="bash" code={nixFlakesCode} />
+	</TabItem>
+	<TabItem label="Nix (Legacy)">
+		<Code lang="bash" code={nixLegacyCode} />
+	</TabItem>
+	<TabItem label="NixOS (Flakes)">
+		<Code lang="nix" code={nixosFlakesCode} title="flake.nix" />
+	</TabItem>
+	<TabItem label="NixOS (Legacy)">
+		<Code lang="nix" code={nixosLegacyCode} title="configuration.nix" />
+	</TabItem>
+</Tabs>
+
+## Nilla Module
+
+For creating NixOS system configurations in Nilla projects, we will need to include the Nilla NixOS
+module. First, we will need to fetch Nilla NixOS for use in the project. We can do this using a tool
+like [npins](https://github.com/andir/npins).
+
+```bash
+npins add --name nilla-nixos github nilla-nix nixos
+```
+
+With the dependency available, we can now include the module in our Nilla project.
+
+<Code lang="nix" code={nilla0Code} title="nilla.nix" />
+
+## Create a NixOS system
+
+NixOS systems are created with the configuration options under `systems.nixos.*`. Each NixOS system
+has its own configuration in this attribute set. The following sample creates a system named `example`
+for the `x86_64-linux` platform.
+
+<Code lang="nix" code={nilla1Code} title="nilla.nix" />
+
+## Using NixOS systems
+
+Now that we have a NixOS system defined, we can use the Nilla CLI to interact with it. With the NixOS
+CLI plugin installed, we can use the `nilla nixos` command to build, switch, and otherwise operate
+on our NixOS systems.
+
+```bash
+# Build the system.
+nilla nixos build example
+
+# Or build and switch to the new configuration.
+nilla nixos switch example
+```

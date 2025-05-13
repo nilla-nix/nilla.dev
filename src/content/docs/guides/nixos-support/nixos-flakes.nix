@@ -4,11 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Add the Nilla CLI as an input in your flake.
-    nilla-cli.url = "github:nilla-nix/cli";
+    # Add the Nilla NixOS CLI as an input in your flake.
+    nilla-nixos.url = "github:nilla-nix/nixos";
   };
 
-  outputs = { nixpkgs, nilla-cli, ... }: {
+  outputs = { nixpkgs, nilla-nixos, ... }: {
     nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
@@ -20,7 +20,7 @@
         ({ pkgs, ... }: {
           environment.systemPackages = [
             # Add the Nilla CLI to your system packages.
-            nilla-cli.packages.${pkgs.system}.default
+            nilla-nixos.packages.${pkgs.system}.default
           ];
         })
       ];
