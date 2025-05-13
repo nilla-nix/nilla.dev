@@ -28,20 +28,20 @@ Nilla is ready to use out of the box with no additional configuration or Nix set
 
 <div className="flex flex-col lg:flex-row gap-8">
   <div className="shrink-0">
-    | Feature              | Nilla    | Flakes | Legacy |
-    | -------------------- | -------- | ------ | ------ |
-    | Pinnable inputs      | ✔️       | ✔️     | ❌     |
-    | Input loaders        | ✔️       | ❌     | ❌     |
-    | Minimal boilerplate  | ✔️       | ❌     | ✔️     |
-    | Configurable inputs  | ✔️       | ❌     | ⚠️\*   |
-    | Extensible           | ✔️       | ❌     | ❌     |
-    | Lazy                 | ✔️       | ⚠️\*\* | ✔️     |
-    | Available OOTB       | ✔️       | ❌     | ✔️     |
-    | Nixpkgs-agnostic     | ✔️       | ❌     | ✔️     |
-    | Type checked         | ✔️       | ❌     | ❌     |
-    | Configurable systems | ✔️       | ❌     | ❌     |
-    | Defined schema       | ✔️       | ✔️     | ❌     |
-    | Stable               | ⚠️\*\*\* | ❌     | ✔️     |
+    | Feature              | Nilla    | Flakes     | Legacy |
+    | -------------------- | -------- | ---------- | ------ |
+    | Pinnable inputs      | ✔️       | ✔️         | ❌     |
+    | Input loaders        | ✔️       | ❌         | ❌     |
+    | Minimal boilerplate  | ✔️       | ❌         | ✔️     |
+    | Configurable inputs  | ✔️       | ❌         | ⚠️\*   |
+    | Extensible           | ✔️       | ❌         | ❌     |
+    | Lazy                 | ✔️       | ⚠️\*\*     | ✔️     |
+    | Available OOTB       | ✔️       | ❌         | ✔️     |
+    | Nixpkgs-agnostic     | ✔️       | ❌         | ✔️     |
+    | Type checked         | ✔️       | ❌         | ❌     |
+    | Configurable systems | ✔️       | ❌         | ❌     |
+    | Defined schema       | ✔️       | ✔️         | ❌     |
+    | Stable               | ⚠️\*\*\* | ⚠️\*\*\*\* | ✔️     |
   </div>
   <div className="lg:self-end">
     ⚠️\* Legacy configuration using `default.nix` and `shell.nix` can only accept dynamic values via function attributes during instantiation, dramatically limiting what can be modified by consumers of a project.
@@ -49,6 +49,8 @@ Nilla is ready to use out of the box with no additional configuration or Nix set
     ⚠️\*\* Flakes have a work-in-progress feature "Lazy Trees" which hopes to address its input laziness shortcoming. However, this feature is not yet available.
 
     ⚠️\*\*\* Nilla isn't stable... yet! We are moving towards a 1.0.0 stability guarantee, but for now it is expected that some things will be broken or change as development continues on pre-1.0 versions.
+
+    ⚠️\*\*\*\* Flakes are widely used but remain an experimental feature of Nix subject to change.
   </div>
 </div>
 
