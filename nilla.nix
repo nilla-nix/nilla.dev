@@ -21,5 +21,36 @@ nilla.create {
           ];
         };
     };
+
+    packages = rec {
+      default = nilla-dev;
+
+      nilla-dev = {
+        systems = [ "x86_64-linux" ];
+
+        package = { buildNpmPackage, importNpmLock, pkg-config, python3, vips, ... }:
+          buildNpmPackage {
+            pname = "nilla-dev";
+            version = "unstable";
+
+            src = ./.;
+
+            npmInstallFlags = [ "--legacy-peer-deps" ];
+
+            buildInputs = [ vips ];
+            nativeBuildInputs = [ pkg-config python3 ];
+
+            npmDeps = importNpmLock {
+              npmRoot = ./.;
+            };
+
+            npmConfigHook = importNpmLock.npmConfigHook;
+
+            installPhase = ''
+              mv dist $out
+            '';
+          };
+      };
+    };
   };
 }
