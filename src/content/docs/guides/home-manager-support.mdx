@@ -1,0 +1,109 @@
+
+---
+title: Creating a Home Manager Home
+description: Create and configure your Home Manager home in your Nilla project.
+---
+
+import { Aside, TabItem, Tabs, Code } from "@astrojs/starlight/components";
+
+import nixLegacyCode from "./home-manager-support/nix-legacy.sh?raw";
+import nixFlakesCode from "./home-manager-support/nix-flakes.sh?raw";
+import nixosFlakesCode from "./home-manager-support/nixos-flakes.nix?raw";
+import nixosLegacyCode from "./home-manager-support/nixos-legacy.nix?raw";
+import nilla0Code from "./home-manager-support/nilla0.nix?raw";
+import nilla1Code from "./home-manager-support/nilla1.nix?raw";
+import nilla2Code from "./home-manager-support/nilla2.nix?raw";
+
+Nilla provides support for Home Manager using the
+[home](https://github.com/nilla-nix/home) module and its accompanying CLI
+plugin. To get started, we will add the module to our project and install the
+CLI plugin so that we can work with the Home Manager homes we create.
+
+<Aside type="note">
+  This guide will assume you have a Nilla project created and a Nixpkgs pin available.
+</Aside>
+
+## CLI Plugin
+
+To interact with Home Manager homes in Nilla projects, we will use the Nilla Home CLI plugin.
+
+<Tabs>
+	<TabItem label="Nix (Flakes)">
+		<Code lang="bash" code={nixFlakesCode} />
+	</TabItem>
+	<TabItem label="Nix (Legacy)">
+		<Code lang="bash" code={nixLegacyCode} />
+	</TabItem>
+	<TabItem label="NixOS (Flakes)">
+		<Code lang="nix" code={nixosFlakesCode} title="flake.nix" />
+	</TabItem>
+	<TabItem label="NixOS (Legacy)">
+		<Code lang="nix" code={nixosLegacyCode} title="configuration.nix" />
+	</TabItem>
+</Tabs>
+
+## Nilla Module
+
+For creating Home Manager homes in Nilla projects, we will need
+to include the Nilla Home module. First, we will need to fetch
+Nilla Home for use in the project. We can do this using a tool like
+[npins](https://github.com/andir/npins).
+
+```bash
+npins add --name nilla-home github nilla-nix home
+```
+
+With the dependency available, we can now include the module in our Nilla project.
+
+<Code lang="nix" code={nilla0Code} title="nilla.nix" />
+
+## Create a Home Manager home
+
+Home Manager homes are created with the configuration options under `homes.*`.
+Each Home Manager home has its own configuration in this attribute set. The
+following sample creates a home for `username` for the `x86_64-linux` system
+`hostname`.
+
+<Code lang="nix" code={nilla1Code} title="nilla.nix" />
+
+The `modules` here are standard Home Manager modules. That means they use the
+[NixOS module system](https://wiki.nixos.org/wiki/NixOS_modules) including
+nixpkgs lib rather than aux lib, `imports` instead of `includes`, etc.
+
+## Using Home Manager homes
+
+### Standalone
+
+Now that we have a Home Manager home defined, we can use the Nilla CLI to
+interact with it. With the Home CLI plugin installed, we can use the `nilla
+home` command to build, switch, and otherwise operate on our Home Manager homes.
+
+```bash
+# Build the system.
+nilla home build 'username@hostname'
+
+# Or build and switch to the new configuration.
+nilla home switch 'username@hostname'
+```
+
+### With a NixOS system
+
+You can attach Home Manager homes to [NixOS systems that you have made with the
+Nilla NixOS module](/guides/nixos-support)
+
+You'll need to include Nilla Home's NixOS module to attach your homes to your
+NixOS systems. Once you've included the module, you can attach a home to a
+system by using `inherit`.
+
+<Code lang="nix" code={nilla2Code} title="nilla.nix" />
+
+Once you've attached your home, you can build or switch to your NixOS system
+as usual.
+
+```bash
+# Build the system.
+nilla nixos build example
+
+# Or build and switch to the new configuration.
+nilla nixos switch example
+```

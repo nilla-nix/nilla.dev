@@ -22,6 +22,7 @@ export default defineConfig({
 						{ label: "Creating Packages", slug: "guides/creating-packages" },
 						{ label: "Creating Shells", slug: "guides/creating-shells" },
 						{ label: "Creating a NixOS System", slug: "guides/nixos-support" },
+						{ label: "Creating a Home Manager Home", slug: "guides/home-manager-support" },
 					],
 				},
 				{
