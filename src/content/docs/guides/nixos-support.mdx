@@ -61,6 +61,10 @@ for the `x86_64-linux` platform.
 
 <Code lang="nix" code={nilla1Code} title="nilla.nix" />
 
+The `modules` here are standard NixOS modules. That means they use the [NixOS
+module system](https://wiki.nixos.org/wiki/NixOS_modules) including nixpkgs lib
+rather than aux lib, `imports` instead of `includes`, etc.
+
 ## Using NixOS systems
 
 Now that we have a NixOS system defined, we can use the Nilla CLI to interact with it. With the NixOS
