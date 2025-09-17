@@ -1,6 +1,6 @@
 ---
-title: NixOS Support
-description: Learn how to create and configure NixOS systems in your Nilla project.
+title: Creating a NixOS System
+description: Create and configure your NixOS system in your Nilla project.
 ---
 
 import { Aside, TabItem, Tabs, Code } from "@astrojs/starlight/components";
@@ -60,6 +60,10 @@ has its own configuration in this attribute set. The following sample creates a 
 for the `x86_64-linux` platform.
 
 <Code lang="nix" code={nilla1Code} title="nilla.nix" />
+
+The `modules` here are standard NixOS modules. That means they use the [NixOS
+module system](https://wiki.nixos.org/wiki/NixOS_modules) including nixpkgs lib
+rather than aux lib, `imports` instead of `includes`, etc.
 
 ## Using NixOS systems
 
